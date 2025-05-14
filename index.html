@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم الاحترافية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #1a1a2e;
+            --secondary-dark: #16213e;
+            --accent-color: #e94560;
+            --highlight-color: #ff7b54;
+            --text-color: #f1f1f1;
+            --card-bg: #0f3460;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-color);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .header h1 {
+            color: var(--text-color);
+            font-size: 2.5rem;
+            display: inline-block;
+            padding: 15px 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--highlight-color);
+        }
+        
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 25px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        
+        .btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 15px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            text-decoration: none;
+            color: var(--text-color);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            height: 160px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--highlight-color);
+        }
+        
+        /* ألوان الخلفية لكل نوع من الروابط */
+        .btn.youtube { background: rgba(255, 0, 0, 0.2); }
+        .btn.email { background: rgba(234, 67, 53, 0.2); }
+        .btn.facebook { background: rgba(24, 119, 242, 0.2); }
+        .btn.skype { background: rgba(0, 175, 240, 0.2); }
+        .btn.whatsapp { background: rgba(37, 211, 102, 0.2); }
+        .btn.website { background: rgba(14, 118, 168, 0.2); }
+        .btn.drive { background: rgba(52, 168, 83, 0.2); }
+        .btn.github { background: rgba(51, 51, 51, 0.2); }
+        .btn.store { background: rgba(255, 165, 0, 0.2); }
+        .btn.local { background: rgba(156, 39, 176, 0.2); }
+        .btn.movies { background: rgba(0, 180, 216, 0.2); }
+        .btn.religion { background: rgba(255, 158, 0, 0.2); }
+        .btn.documents { background: rgba(106, 76, 147, 0.2); }
+        .btn.photos { background: rgba(0, 188, 212, 0.2); } /* جديد: صور */
+        .btn.videos { background: rgba(233, 30, 99, 0.2); } /* جديد: فيديوهات */
+        .btn.ai { background: rgba(103, 58, 183, 0.2); } /* جديد: ذكاء اصطناعي */
+        .btn.games { background: rgba(76, 175, 80, 0.2); } /* جديد: ألعاب */
+        .btn.education { background: rgba(255, 87, 34, 0.2); } /* جديد: تعليم */
+        .btn.music { background: rgba(0, 150, 136, 0.2); } /* جديد: موسيقى */
+        
+        /* تأثيرات التحويم مع الخلفيات الجديدة */
+        .btn:hover {
+            background: var(--card-bg) !important;
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+        
+        /* ألوان خاصة بكل نوع من الروابط */
+        .btn.youtube::before { background: #FF0000; }
+        .btn.email::before { background: #EA4335; }
+        .btn.facebook::before { background: #1877F2; }
+        .btn.skype::before { background: #00AFF0; }
+        .btn.whatsapp::before { background: #25D366; }
+        .btn.website::before { background: #0e76a8; }
+        .btn.drive::before { background: #34A853; }
+        .btn.github::before { background: #333; }
+        .btn.store::before { background: #FFA500; }
+        .btn.local::before { background: #9C27B0; }
+        .btn.movies::before { background: #00B4D8; }
+        .btn.religion::before { background: #FF9E00; }
+        .btn.documents::before { background: #6A4C93; }
+        .btn.photos::before { background: #00BCD4; } /* جديد: صور */
+        .btn.videos::before { background: #E91E63; } /* جديد: فيديوهات */
+        .btn.ai::before { background: #673AB7; } /* جديد: ذكاء اصطناعي */
+        .btn.games::before { background: #4CAF50; } /* جديد: ألعاب */
+        .btn.education::before { background: #FF5722; } /* جديد: تعليم */
+        .btn.music::before { background: #009688; } /* جديد: موسيقى */
+        
+        .btn i {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:hover i {
+            transform: scale(1.2) rotate(5deg);
+            color: var(--highlight-color);
+        }
+        
+        .btn .label {
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover .label {
+            color: var(--highlight-color);
+        }
+        
+        .add-btn {
+            background: rgba(15, 52, 96, 0.5);
+            border: 2px dashed var(--highlight-color);
+            color: var(--highlight-color);
+            transition: all 0.3s ease;
+        }
+        
+        .add-btn:hover {
+            background: rgba(233, 69, 96, 0.2);
+            transform: scale(1.05) !important;
+        }
+        
+        .add-btn i {
+            color: var(--highlight-color);
+        }
+        
+        /* تأثيرات الضوء عند التحويم */
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .btn:hover::after {
+            opacity: 1;
+        }
+        
+        /* زر الحذف */
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: rgba(233, 69, 96, 0.7);
+            color: white;
+            border: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 3;
+        }
+        
+        .btn:hover .delete-btn {
+            opacity: 1;
+        }
+        
+        .delete-btn:hover {
+            background: var(--accent-color);
+        }
+        
+        /* زر الحفظ العام */
+        .save-all-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: var(--highlight-color);
+            color: #111;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+        
+        .save-all-btn:hover {
+            background: #ff6b42;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+                padding: 12px 25px;
+            }
+            
+            .btn {
+                padding: 20px 10px;
+                height: 140px;
+            }
+            
+            .btn i {
+                font-size: 2.2rem;
+            }
+            
+            .btn .label {
+                font-size: 0.95rem;
+            }
+            
+            .save-all-btn {
+                bottom: 10px;
+                left: 10px;
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* أنيميشن ظهور الأزرار */
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .btn {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+        
+        .btn:nth-child(1) { animation-delay: 0.1s; }
+        .btn:nth-child(2) { animation-delay: 0.2s; }
+        .btn:nth-child(3) { animation-delay: 0.3s; }
+        .btn:nth-child(4) { animation-delay: 0.4s; }
+        .btn:nth-child(5) { animation-delay: 0.5s; }
+        .btn:nth-child(6) { animation-delay: 0.6s; }
+        .btn:nth-child(7) { animation-delay: 0.7s; }
+        .btn:nth-child(8) { animation-delay: 0.8s; }
+        .btn:nth-child(9) { animation-delay: 0.9s; }
+        .btn:nth-child(10) { animation-delay: 1.0s; }
+        .btn:nth-child(11) { animation-delay: 1.1s; }
+        
+        /* نافذة الإضافة */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--highlight-color);
+            animation: modalFadeIn 0.4s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .modal h2 {
+            color: var(--highlight-color);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--highlight-color);
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .modal-btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-btn.cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+        }
+        
+        .modal-btn.cancel:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-btn.add {
+            background: var(--highlight-color);
+            color: #111;
+        }
+        
+        .modal-btn.add:hover {
+            background: #ff6b42;
+            transform: translateY(-2px);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--highlight-color);
+            transform: rotate(90deg);
+        }
+
+        /* تأثيرات صوتية */
+        .sound-effect {
+            display: none;
+        }
+        
+        /* تنسيق جديد لقائمة الاختيارات */
+        .form-group select option {
+            padding: 8px;
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        .form-group select option:hover {
+            background: var(--highlight-color);
+            color: #111;
+        }
+    </style>
+</head>
+<body>
+    <!-- تأثيرات صوتية مخفية -->
+    <audio id="hoverSound" class="sound-effect" src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3"></audio>
+    <audio id="clickSound" class="sound-effect" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3"></audio>
+    <audio id="deleteSound" class="sound-effect" src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-retro-game-over-213.mp3"></audio>
+    <audio id="addSound" class="sound-effect" src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3"></audio>
+    
+    <div class="header">
+        <h1>لوحة التحكم الاحترافية</h1>
+    </div>
+    
+    <div class="container" id="linksContainer">
+        <!-- الروابط سيتم تحميلها من localStorage -->
+    </div>
+
+    <!-- زر الحفظ العام -->
+    <button class="save-all-btn" id="saveAllBtn">حفظ جميع التغييرات</button>
+
+    <!-- نافذة إضافة رابط جديد -->
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2>إضافة رابط جديد</h2>
+            <div class="form-group">
+                <label for="linkUrl">رابط URL:</label>
+                <input type="text" id="linkUrl" placeholder="https://example.com">
+            </div>
+            <div class="form-group">
+                <label for="linkTitle">عنوان الرابط:</label>
+                <input type="text" id="linkTitle" placeholder="اسم الرابط">
+            </div>
+            <div class="form-group">
+                <label for="linkType">نوع الرابط:</label>
+                <select id="linkType">
+                    <option value="auto">تحديد تلقائي</option>
+                    <optgroup label="الشبكات الاجتماعية">
+                        <option value="facebook">فيسبوك</option>
+                        <option value="youtube">يوتيوب</option>
+                        <option value="whatsapp">واتساب</option>
+                        <option value="skype">سكايب</option>
+                        <option value="github">جيت هب</option>
+                    </optgroup>
+                    <optgroup label="الخدمات">
+                        <option value="email">بريد إلكتروني</option>
+                        <option value="drive">جوجل درايف</option>
+                        <option value="website">موقع ويب</option>
+                        <option value="store">متجر</option>
+                        <option value="local">موقع محلي</option>
+                    </optgroup>
+                    <optgroup label="المحتوى">
+                        <option value="movies">أفلام</option>
+                        <option value="photos">صور</option>
+                        <option value="videos">فيديوهات</option>
+                        <option value="music">موسيقى</option>
+                        <option value="documents">مستندات</option>
+                    </optgroup>
+                    <optgroup label="أخرى">
+                        <option value="religion">دين</option>
+                        <option value="ai">ذكاء اصطناعي</option>
+                        <option value="games">ألعاب</option>
+                        <option value="education">تعليم</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="cancelBtn">إلغاء</button>
+                <button class="modal-btn add" id="confirmAddBtn">إضافة</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات الروابط
+        let links = [];
+        
+        // تحميل الروابط من localStorage عند بدء التشغيل
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLinks();
+            
+            // إعداد تأثيرات صوتية
+            setupSoundEffects();
+        });
+        
+        // إعداد تأثيرات صوتية
+        function setupSoundEffects() {
+            const buttons = document.querySelectorAll('.btn, .modal-btn, .save-all-btn, .delete-btn');
+            
+            buttons.forEach(button => {
+                // صوت التحويم
+                button.addEventListener('mouseenter', function() {
+                    const sound = document.getElementById('hoverSound');
+                    sound.currentTime = 0;
+                    sound.play().catch(e => console.log("لم يتم تشغيل الصوت:", e));
+                });
+                
+                // صوت النقر
+                button.addEventListener('click', function() {
+                    const sound = document.getElementById('clickSound');
+                    sound.currentTime = 0;
+                    sound.play().catch(e => console.log("لم يتم تشغيل الصوت:", e));
+                });
+            });
+        }
+        
+        // تحميل الروابط من localStorage
+        function loadLinks() {
+            const savedLinks = localStorage.getItem('dashboardLinks');
+            if (savedLinks) {
+                links = JSON.parse(savedLinks);
+                renderLinks();
+            } else {
+                // الروابط الافتراضية
+                links = [
+                    { url: 'https://www.youtube.com/@Ahmedeldkrory2', title: 'قناة اليوتيوب الأولى', type: 'youtube' },
+                    { url: 'https://www.youtube.com/@ahmed-eldakrory', title: 'قناة اليوتيوب الثانية', type: 'youtube' },
+                    { url: 'mailto:ahmdfwzyly6@gmail.com', title: 'البريد الإلكتروني', type: 'email' },
+                    { url: 'https://www.facebook.com/profile.php?id=61569878923724', title: 'صفحة الفيسبوك', type: 'facebook' },
+                    { url: 'https://join.skype.com/vJ2aS74abU3C', title: 'سكايب', type: 'skype' },
+                    { url: 'https://wa.me/whatsapp:+0201500053127', title: 'واتساب', type: 'whatsapp' },
+                    { url: 'https://eldakrory2.github.io/mwkiaaul/', title: 'الموقع الأول', type: 'website' },
+                    { url: 'https://eldakrory2.github.io/mwkiathany/', title: 'الموقع الثاني', type: 'website' },
+                    { url: 'https://www.facebook.com/profile.php?id=100011654144448', title: 'صفحة الفيسبوك الثانية', type: 'facebook' },
+                    { url: 'https://eldakrory2.github.io/supermarket/', title: 'متجر سوبر ماركت', type: 'store' },
+                    { url: 'https://docs.google.com/spreadsheets/d/1LJZdtGeTSA6Co6SFlX5DhppDDULKjl0MhxkOwR9Vf_s/edit?usp=sharing', title: 'استقبال المواقع', type: 'drive' },
+                    { url: 'https://docs.google.com/spreadsheets/d/1jqhQUf4xAfzw3rgSX9r2b6tB-VPNwIOVyKdzvAcZbac/edit?usp=sharing', title: 'روابط جوجل درايف', type: 'drive' }
+                ];
+                saveLinks();
+                renderLinks();
+            }
+        }
+        
+        // عرض الروابط في الصفحة
+        function renderLinks() {
+            const container = document.getElementById('linksContainer');
+            container.innerHTML = '';
+            
+            links.forEach((link, index) => {
+                const btn = createLinkButton(link, index);
+                container.appendChild(btn);
+            });
+            
+            // إضافة زر الإضافة
+            const addBtn = document.createElement('a');
+            addBtn.href = '#';
+            addBtn.className = 'btn add-btn';
+            addBtn.id = 'addBtn';
+            addBtn.innerHTML = '<i class="fas fa-plus-circle"></i><span class="label">إضافة رابط جديد</span>';
+            container.appendChild(addBtn);
+            
+            // إضافة حدث النقر لزر الإضافة
+            addBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('addModal').style.display = 'flex';
+                document.getElementById('addSound').play().catch(e => console.log("لم يتم تشغيل الصوت:", e));
+            });
+        }
+        
+        // إنشاء زر رابط
+        function createLinkButton(link, index) {
+            const { url, title, type } = link;
+            let iconClass, iconCode;
+            
+            // تعيين الأيقونة واللون حسب نوع الرابط
+            switch(type) {
+                case 'youtube':
+                    iconClass = 'youtube';
+                    iconCode = 'fab fa-youtube';
+                    break;
+                case 'email':
+                    iconClass = 'email';
+                    iconCode = 'fas fa-envelope';
+                    break;
+                case 'facebook':
+                    iconClass = 'facebook';
+                    iconCode = 'fab fa-facebook-f';
+                    break;
+                case 'skype':
+                    iconClass = 'skype';
+                    iconCode = 'fab fa-skype';
+                    break;
+                case 'whatsapp':
+                    iconClass = 'whatsapp';
+                    iconCode = 'fab fa-whatsapp';
+                    break;
+                case 'drive':
+                    iconClass = 'drive';
+                    iconCode = 'fab fa-google-drive';
+                    break;
+                case 'github':
+                    iconClass = 'github';
+                    iconCode = 'fab fa-github';
+                    break;
+                case 'store':
+                    iconClass = 'store';
+                    iconCode = 'fas fa-store';
+                    break;
+                case 'local':
+                    iconClass = 'local';
+                    iconCode = 'fas fa-laptop-house';
+                    break;
+                case 'movies':
+                    iconClass = 'movies';
+                    iconCode = 'fas fa-film';
+                    break;
+                case 'religion':
+                    iconClass = 'religion';
+                    iconCode = 'fas fa-mosque';
+                    break;
+                case 'documents':
+                    iconClass = 'documents';
+                    iconCode = 'fas fa-file-alt';
+                    break;
+                case 'photos': // جديد: صور
+                    iconClass = 'photos';
+                    iconCode = 'fas fa-images';
+                    break;
+                case 'videos': // جديد: فيديوهات
+                    iconClass = 'videos';
+                    iconCode = 'fas fa-video';
+                    break;
+                case 'ai': // جديد: ذكاء اصطناعي
+                    iconClass = 'ai';
+                    iconCode = 'fas fa-robot';
+                    break;
+                case 'games': // جديد: ألعاب
+                    iconClass = 'games';
+                    iconCode = 'fas fa-gamepad';
+                    break;
+                case 'education': // جديد: تعليم
+                    iconClass = 'education';
+                    iconCode = 'fas fa-graduation-cap';
+                    break;
+                case 'music': // جديد: موسيقى
+                    iconClass = 'music';
+                    iconCode = 'fas fa-music';
+                    break;
+                default: // موقع ويب
+                    iconClass = 'website';
+                    iconCode = 'fas fa-globe';
+            }
+            
+            // إنشاء الزر
+            const btn = document.createElement('a');
+            btn.href = url;
+            btn.target = '_blank';
+            btn.className = `btn ${iconClass}`;
+            btn.innerHTML = `
+                <button class="delete-btn" data-index="${index}">×</button>
+                <i class="${iconCode}"></i>
+                <span class="label">${title}</span>
+            `;
+            btn.style.animation = 'fadeInUp 0.6s ease forwards';
+            
+            // إضافة حدث النقر لزر الحذف
+            const deleteBtn = btn.querySelector('.delete-btn');
+            deleteBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                document.getElementById('deleteSound').play().catch(e => console.log("لم يتم تشغيل الصوت:", e));
+                deleteLink(index);
+            });
+            
+            return btn;
+        }
+        
+        // حذف رابط
+        function deleteLink(index) {
+            if (confirm('هل أنت متأكد من حذف هذا الرابط؟')) {
+                links.splice(index, 1);
+                saveLinks();
+                renderLinks();
+            }
+        }
+        
+        // حفظ الروابط في localStorage
+        function saveLinks() {
+            localStorage.setItem('dashboardLinks', JSON.stringify(links));
+        }
+        
+        // فتح نافذة الإضافة
+        document.getElementById('addBtn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('addModal').style.display = 'flex';
+        });
+        
+        // إغلاق النافذة
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+        document.getElementById('cancelBtn').addEventListener('click', closeModal);
+        
+        function closeModal() {
+            document.getElementById('addModal').style.display = 'none';
+            // مسح الحقول
+            document.getElementById('linkUrl').value = '';
+            document.getElementById('linkTitle').value = '';
+            document.getElementById('linkType').value = 'auto';
+        }
+        
+        // إضافة الرابط الجديد
+        document.getElementById('confirmAddBtn').addEventListener('click', function() {
+            const url = document.getElementById('linkUrl').value.trim();
+            const title = document.getElementById('linkTitle').value.trim();
+            const selectedType = document.getElementById('linkType').value;
+            
+            if (!url || !title) {
+                alert('الرجاء إدخال كل البيانات المطلوبة');
+                return;
+            }
+            
+            // تحديد النوع تلقائياً إذا كان الخيار "تحديد تلقائي"
+            let type = selectedType === 'auto' ? detectLinkType(url) : selectedType;
+            
+            // إضافة الرابط الجديد إلى المصفوفة
+            links.push({ url, title, type });
+            saveLinks();
+            renderLinks();
+            closeModal();
+            
+            // تشغيل صوت الإضافة
+            document.getElementById('addSound').play().catch(e => console.log("لم يتم تشغيل الصوت:", e));
+        });
+        
+        // دالة للكشف عن نوع الرابط تلقائياً
+        function detectLinkType(url) {
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                return 'youtube';
+            } else if (url.startsWith('mailto:')) {
+                return 'email';
+            } else if (url.includes('facebook.com') || url.includes('fb.com')) {
+                return 'facebook';
+            } else if (url.includes('skype.com')) {
+                return 'skype';
+            } else if (url.includes('whatsapp.com') || url.includes('wa.me')) {
+                return 'whatsapp';
+            } else if (url.includes('drive.google.com') || url.includes('docs.google.com')) {
+                return 'drive';
+            } else if (url.includes('github.com')) {
+                return 'github';
+            } else if (url.includes('store') || url.includes('shop') || url.includes('market')) {
+                return 'store';
+            } else if (url.includes('localhost') || url.includes('127.0.0.1') || url.includes('.local')) {
+                return 'local';
+            } else if (url.includes('movie') || url.includes('film') || url.includes('flix')) {
+                return 'movies';
+            } else if (url.includes('photo') || url.includes('image') || url.includes('pic')) {
+                return 'photos';
+            } else if (url.includes('video') || url.includes('watch') || url.includes('tube')) {
+                return 'videos';
+            } else if (url.includes('music') || url.includes('sound') || url.includes('audio')) {
+                return 'music';
+            } else if (url.includes('ai') || url.includes('artificial') || url.includes('chatgpt') || url.includes('openai')) {
+                return 'ai';
+            } else if (url.includes('game') || url.includes('play') || url.includes('gaming')) {
+                return 'games';
+            } else if (url.includes('learn') || url.includes('course') || url.includes('education')) {
+                return 'education';
+            } else if (url.includes('islam') || url.includes('quran') || url.includes('prayer')) {
+                return 'religion';
+            } else if (url.includes('doc') || url.includes('pdf') || url.includes('file')) {
+                return 'documents';
+            } else {
+                return 'website';
+            }
+        }
+        
+        // زر الحفظ العام
+        document.getElementById('saveAllBtn').addEventListener('click', function() {
+            saveLinks();
+            alert('تم حفظ جميع التغييرات بنجاح');
+        });
+    </script>
+</body>
+</html>
